@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>topic_index</title>
+</head>
+<body>
+  topic/index html!
+<form method="post" action="/api/topic/publish" >
+	type:<input type="text" name="type" value="1">
+	userid:<input type="text" name="userid" value="">
+	content:<input type="text" name="content" value="">
+	<input type="submit" value="publish">
+
+</form>
+
+<br>
+<br>
+<form method="post" action="/api/topic/delete" >
+	userid:<input type="text" name="userid" value="">
+	curPn:<input type="text" name="curPn" value="1">
+	tid:<input type="text" name="tid" value="">
+	<input type="submit" value="delete">
+
+</form>
+
+</body>
+</html>

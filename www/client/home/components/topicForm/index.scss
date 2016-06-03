@@ -1,0 +1,31 @@
+//topicForm scss
+.topic-form-wrapper {
+	padding:0 10px;
+}
+
+.topic-form {
+    margin: 20px 0 10px;
+}
+
+.topic-form .topic-input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 80px;
+}
+
+.topic-btn-container {
+    text-align: right;
+    margin-top: 2px;
+}
+
+.topic-form .pub-btn {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.anony_txt{
+	font-style: normal;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20px;
+}

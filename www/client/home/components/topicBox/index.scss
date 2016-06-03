@@ -1,0 +1,16 @@
+//topicBox scss
+.topic-list{
+}
+
+.topic-item{
+	margin:10px 10px;
+}
+
+.topic-item+ .topic-item{
+	border-top: 1px solid #eee;
+}
+
+.topic-author{
+	margin-top:10px;
+	background-color: #eee;
+}
