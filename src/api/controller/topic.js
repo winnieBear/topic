@@ -42,7 +42,7 @@ export default class extends Base {
             
         }
         topic['content'] = this.post('content');
-        console.log('centent:---------------',topic['content']);
+        //console.log('centent:---------------',topic['content']);
         //do some handle
         let TopicService = think.service('api/topic');
         let topicService = new TopicService();

@@ -1,7 +1,9 @@
-import routes from './route/RootRoute'
-import context from './context'
+import Root from './containers/Root'
+import route from './routes'
+import configureStore from './store/configureStore'
 
 export default {
-  routes: routes,
-  context: context
+  Root: Root,
+  route:route,
+  configureStore:configureStore
 }

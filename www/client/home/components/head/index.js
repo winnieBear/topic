@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import cookie from 'react-cookie';
 import { logout } from '../../actions'
 
+
 require('./index.scss')
 
 let headComponent =  React.createClass({
@@ -13,14 +14,18 @@ let headComponent =  React.createClass({
     //location.reload();
     this.props.dispatch(logout());
   },
+  onLogin:function(e){
+    e.preventDefault();
+    let loginUrl = 'https://sso.58corp.com/login/go?url='+encodeURIComponent(location.href);
+    location.href = loginUrl;
+  },
   render: function() {
     let user = this.props.userid;
-    let loginUrl = 'https://sso.58corp.com/login/go?url='+encodeURIComponent(location.href);
     return (
       <div className="head-wrapper">
         <div className="account">
           <i className="icon-user" />
-          { user == '' ? <a href={loginUrl}>请登录</a> : <span>{user},<a href="javascript:;" onClick={this.loginOut}>退出</a></span> }
+          { user == '' ? <a href="javascript:;" onClick={this.onLogin}>请登录</a> : <span>{user},<a href="javascript:;" onClick={this.loginOut}>退出</a></span> }
         </div> 
       </div>
     );

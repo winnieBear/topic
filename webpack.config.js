@@ -1,11 +1,11 @@
 var path = require('path');
 var webpack = require('webpack');
-//var serverConfig = require('./webpack.config.server')
+var serverConfig = require('./webpack.config.server')
 //var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var clients = require('./pages').getClient();
-console.log(clients)
+console.info('client:',clients)
 
 module.exports = [{
   name: 'client side render',
@@ -52,6 +52,11 @@ module.exports = [{
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+        "process.env": {
+            BROWSER: JSON.stringify(true)
+        }
+    }),
     // new webpack.optimize.UglifyJsPlugin()
    /* new BrowserSyncPlugin({
       // browse to http://localhost:3000/ during development, 
@@ -64,4 +69,4 @@ module.exports = [{
       allChunks: true
     })
   ]
-}]
+}, serverConfig]

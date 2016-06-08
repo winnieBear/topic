@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Topic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/home.css">
+</head>
+
+<body>
+<div id="react-dom"><%- html%></div>
+</body>
+<script>
+  window.clientData = JSON.parse(decodeURIComponent('<%- __CLIENT_DATA__ %>'));
+</script>
+<script src="/static/home.bundle.js"></script>
+</html>

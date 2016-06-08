@@ -4,11 +4,13 @@ import { routerReducer as routing } from 'react-router-redux'
 import { combineReducers } from 'redux'
 
 const topic = (state={
-  pageNum:1,
-  totalPages:1,
+  /*page:{
+    pageNum:1,
+    totalPages:1
+  },
   userid:'',
   tLists:[],
-  isFetching:false
+  isFetching:false*/
 }, action) => {
   switch (action.type) {
     case 'LOGOUT':

@@ -5,7 +5,7 @@
  */
 export default {
   type: 'mysql',
-  log_sql: true, //是否记录 sql 语句
+  log_sql: false, //是否记录 sql 语句
   log_connect: true, // 是否记录连接数据库的信息
   adapter: {
     mysql: {

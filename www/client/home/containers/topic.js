@@ -12,29 +12,38 @@ import Head from '../components/head/index'
 class Topic extends Component {
   constructor(props) {
     super(props)
-    this.publishTopic = this.publishTopic.bind(this)
-    this.turnPage = this.turnPage.bind(this)
+    this.publishTopic = this.publishTopic.bind(this);
+    //this.first = process.env.BROWSER ? (window.clientData ? true : false):false;
   }
   componentDidMount() {
-    this.props.dispatch(listTopicByPage(this.props.page.pageNum));
+    let pageNum = this.props.params.pageNum || 1;
+    let first = process.env.BROWSER ? (window.clientData ? true : false):false;
+    if(!first){
+      this.props.dispatch(listTopicByPage(pageNum));
+    }
   }
+  componentDidUpdate(prevProps) {
+    let prevPageNum = prevProps.params.pageNum;
+    let pageNum = this.props.params.pageNum ;
+    if(pageNum && pageNum != prevPageNum){
+      this.props.dispatch(listTopicByPage(pageNum));
+    }
+  }
+ 
  
  	publishTopic(topic) {
     this.props.dispatch(addTopic(topic));
   }
 
-  turnPage(pageNum){
-    this.props.dispatch(listTopicByPage(pageNum));
-  }
- 
   render() {
+    //console.log('render -----------------topic')
     const { tLists,loginUser,page,isFetching} = this.props;
    	return (
       <div>
         <Head user={loginUser} />
         <TopicForm publishTopic={this.publishTopic} />
         <TopicBox  data={tLists}  loginUser={loginUser} />
-        <Page turnPage={this.turnPage}  page={page} />
+        <Page  page={page} />
       </div>
     );
   }
@@ -49,7 +58,7 @@ function mapStateToProps(state, ownProps) {
       pageNum:1,
       totalPages:1
     },
-    isFetching:topic.isFetching || false
+    isFetching:topic.isFetching || false,
   }
 }
 
