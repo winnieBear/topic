@@ -12,7 +12,7 @@ export default function configureStore(history,initialState={}) {
       applyMiddleware(
         thunkMiddleware,
         routerMiddleware(history),
-        createLogger()
+        //createLogger()
       )
     )
   )

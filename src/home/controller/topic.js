@@ -47,26 +47,27 @@ export default class extends Base {
 
     match({routes, location: http.url }, async (err, redirectLocation, renderProps) => {
       if (err) {
-        self.fail(`Internal Server Error ${err}`)
-        //res.status(500).end(`Internal Server Error ${err}`);
+        think.log(`Internal Server Error ${err}`,'ERROR');
+        return think.statusAction(500);
       } else if (redirectLocation) {
+        think.log('route redirect to '+redirectLocation.pathname + redirectLocation.search,'INFO');
         http.redirect(redirectLocation.pathname + redirectLocation.search)
         //res.redirect(redirectLocation.pathname + redirectLocation.search);
       } else if (renderProps) {
-        let data = await getTopicData(self);
-        let __CLIENT_DATA__ = {
-          topic:{
-            userid:data['userid'],
-            tLists:data['data'],
-            page:{
-              pageNum:data['currentPage'] || 1,
-              totalPages:data['totalPages'] || 1
-            }
-          },
-          //routing:renderProps
-        };
-        store = configureStore(memoryHistory, __CLIENT_DATA__ )
         try{
+            let data = await getTopicData(self);
+            let __CLIENT_DATA__ = {
+              topic:{
+                userid:data['userid'],
+                tLists:data['data'],
+                page:{
+                  pageNum:data['currentPage'] || 1,
+                  totalPages:data['totalPages'] || 1
+                }
+              },
+              //routing:renderProps
+            };
+            store = configureStore(memoryHistory, __CLIENT_DATA__ )
             const html = renderToString(
             <div>
                 <Provider store={store}>
@@ -74,17 +75,16 @@ export default class extends Base {
                 </Provider>
             </div>
             );
+            this.assign('html',html)
+            this.assign('__CLIENT_DATA__', encodeURIComponent(JSON.stringify(__CLIENT_DATA__)));
           }catch(err){
-            console.log('------------errror')
             think.log(err.stack.split("\n"), 'ERROR');
-            self.fail(`Internal Server Error ${err}`)
+            return think.statusAction(503,self.http);
           }
-          this.assign('html',html)
-          this.assign('__CLIENT_DATA__', encodeURIComponent(JSON.stringify(__CLIENT_DATA__)));
           return this.display();
       } else {
-        self.fail('404 Not found')
-        //res.status(404).end('Not found');
+        think.log('404 Not found','ERROR');
+        return think.statusAction(404,self.http);
       }
     });
 

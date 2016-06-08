@@ -9,16 +9,18 @@ export default {
   log_connect: true, // 是否记录连接数据库的信息
   adapter: {
     mysql: {
-     /* host: 'localhost',
+      host: 'localhost',
       port: '3306',
       database: 'topic',
       user: 'topic',
-      password: '',*/
+      password: '',
+    /*
       host: '192.168.119.5',
       port: '3306',
       database: 'topic',
       user: 'topic',
       password: 'topic-dev',
+    */
       prefix: 'think_',
       encoding: 'utf8'
     },
