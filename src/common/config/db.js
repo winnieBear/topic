@@ -14,7 +14,7 @@ export default {
       database: 'topic',
       user: 'topic',
       password: '',*/
-      host: '192.168.119.5',
+      host: '192.168.119.*',
       port: '3306',
       database: 'topic',
       user: 'topic',
