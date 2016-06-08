@@ -13,14 +13,9 @@ export default {
       port: '3306',
       database: 'topic',
       user: 'topic',
-<<<<<<< HEAD
       password: '',
     /*
-      host: '192.168.119.5',
-=======
-      password: '',*/
       host: '192.168.119.*',
->>>>>>> 2603a66592ec35374c32bba9ad58349cf9b6f213
       port: '3306',
       database: 'topic',
       user: 'topic',
