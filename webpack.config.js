@@ -52,6 +52,7 @@ module.exports = [{
     ]
   },
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin('vendor','vendor.js'),
     new webpack.DefinePlugin({
         "process.env": {
             BROWSER: JSON.stringify(true)

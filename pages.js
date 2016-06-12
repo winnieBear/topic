@@ -19,6 +19,8 @@ exports.getClient = function () {
     result[name] = val.client;
   });
 
+  result['vendor'] = ['babel-polyfill','sprintf-js','marked','react','redux','react-router','react-dom','react-redux','react-router-redux','redux-thunk'];
+
   return result;
 };
 
