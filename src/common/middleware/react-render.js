@@ -3,42 +3,52 @@
 import path from 'path'
 import React from 'react'
 import {renderToString} from 'react-dom/server';
-import {match,browserHistory} from 'react-router'
+import { createMemoryHistory,RouterContext, match } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux'
+import { Provider } from 'react-redux';
+
 
 /**
  * middleware
  */
 export default class extends think.middleware.base {
-  isLogin () {
-    let userInfo = this.http._session.data.userInfo;
-
-    return !think.isEmpty(userInfo);
-  }
-
+  
 
   async getReactBody() {
-    let moduleName = this.http.module;
-    var module = require(path.join('../../../share/' + moduleName + '.bundle.js'));
-    console.log(module)
-    let Root = module.Root;
-    let route = module.route;
-    let configureStore = module.configureStore;
     let self = this;
-    let clientData = JSON.parse(decodeURIComponent(self.http._view.tVar.__CLIENT_DATA__));
+    let http = this.http;
+    let moduleName = http.module;
+    var module = require(path.join('../../../share/' + moduleName + '.bundle.js'));
+    let routes = module.route;
+    let configureStore = module.configureStore;
+    
+    const memoryHistory = createMemoryHistory(http.pathname)
+    let store = configureStore(memoryHistory )
+    const history = syncHistoryWithStore(memoryHistory, store)
+    
+
+    let clientData = JSON.parse(decodeURIComponent(http._view.tVar.__CLIENT_DATA__));
 
     return new Promise(function (resolve, reject) {
-      match({routes: route, location: self.http.url}, (error, redirectLocation, renderProps) => {
+      match({routes: routes, location: http.url}, (error, redirectLocation, renderProps) => {
         if (error) {
+          think.log(`Internal Server Error ${err}`,'ERROR');
           reject(error);
         }
         else if (redirectLocation) {
-          resolve(self.http.redirect(redirectLocation));
+          think.log('route redirect to '+redirectLocation.pathname + redirectLocation.search,'INFO');
+          resolve(http.redirect(redirectLocation.pathname + redirectLocation.search));
         }
         else if (renderProps) {
-          const history = browserHistory;
-          const store = configureStore(clientData);
-          //console.info('---------------------',renderProps)
-          resolve(renderToString(<Root store={store} history={history} />));
+          store = configureStore(memoryHistory, clientData )
+          const html = renderToString(
+          <div>
+              <Provider store={store}>
+                <RouterContext {...renderProps} />
+              </Provider>
+          </div>
+          );
+          resolve(html);
         }
         else {
           resolve('component not found');
